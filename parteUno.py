@@ -35,6 +35,29 @@ def primeGenerator(n, k):
   
   return primes
 
+def power(x, y, p) :
+    res = 1     # Initialize result
+ 
+    # Update x if it is more
+    # than or equal to p
+    x = x % p
+     
+    if (x == 0) :
+        return 0
+ 
+    while (y > 0) :
+         
+        # If y is odd, multiply
+        # x with result
+        if ((y & 1) == 1) :
+            res = (res * x) % p
+ 
+        # y must be even now
+        y = y >> 1      # y = y/2
+        x = (x * x) % p
+         
+    return res
+
 def main():
     prime = ''
     a = '\n-----------------------------'
@@ -62,10 +85,12 @@ def main():
     a = random.randint(2, prime-1)
     b = random.randint(2, prime-1)
 
-    alice = g**a
-    bob = g**b
-    aliceBob = bob**a
-    bobAlice = alice**b
+    
+    alice = power(g, a, prime)
+    bob = power(g, b, prime)
+    aliceBob = power(bob, a, prime)
+    bobAlice = power(alice, b, prime)
+    print('g: ',g,'\na: ',a,'\nb: ',b,'\nalice: ',alice,'\nbob: ',bob,'\naliceBob: ',aliceBob,'\nbobAlice: ',bobAlice)
 
     if aliceBob == bobAlice:
         print('La clave coincide!!')
